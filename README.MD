@@ -8,7 +8,7 @@
 
 ## Descrição
 
-API REST para cadastro e gerenciamento de livros com suporte a paginação, validação e persistência em memória para entrega rápida de um backend sólido.
+API REST para cadastro e gerenciamento de livros.
 
 ## Funcionalidades
 

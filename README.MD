@@ -63,6 +63,9 @@ docker compose up -d
 
 ## Documentação da API
 
+Disponível em `http://localhost:8080/swagger-ui/index.html` após subir a aplicação.
+
+
 | Método | Endpoint | Descrição | Status de sucesso |
 |--------|----------|-----------|-------------------|
 | GET | `/v1/books` | Lista paginada | `200` |

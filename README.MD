@@ -21,8 +21,7 @@ API REST para cadastro e gerenciamento de livros com suporte a paginação, vali
 
 ## Stack e Decisões Técnicas
 
-- Java 25 — uso da versão mais recente para aproveitar recursos da linguagem e performance (Virtual Threads, Menor uso de memoria com CompactObjectHeaders)
-
+- Java 25 — uso da versão mais recente para aproveitar recursos de performance: [JEP 491](https://openjdk.org/jeps/491) (Virtual Threads sem pinning) e [JEP 450](https://openjdk.org/jeps/450) (Compact Object Headers com menor uso de memória).
 - Spring Boot 3.5 — estabilidade e suporte moderno para APIs REST.
 - Gradle 9 — build rápido, configuração declarativa e compatibilidade com cache.
 - Spring Data JPA + H2 — persistência leve para protótipo com SQL acessível e testes rápidos.

@@ -29,6 +29,7 @@ API REST para cadastro e gerenciamento de livros com suporte a paginação, vali
 - **SpringDoc OpenAPI 2.8.x** — documentação automática das rotas e contratos.
 - **JUnit 5 + Mockito** — testes unitários e mocks para camada de serviço/controller.
 - **Docker com multi-stage build e Layered JAR** — imagem enxuta e build otimizado.
+- **GitHub Actions** — pipeline com etapa de testes obrigatória antes do build e push da imagem Docker.
 
 ## Documentação da API
 

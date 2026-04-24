@@ -25,7 +25,6 @@ API REST para cadastro e gerenciamento de livros com suporte a paginação, vali
 - **Gradle 9** — build rápido, configuração declarativa e compatibilidade com cache.
 - **Spring Data JPA + H2** — persistência leve para protótipo com SQL acessível e testes rápidos.
 - **MapStruct** — mapeamento de DTOs com código gerado, evitando boilerplate.
-- **Bean Validation (Jakarta)** — validação consistente de entrada no nível do modelo.
 - **SpringDoc OpenAPI 2.8.x** — documentação automática das rotas e contratos.
 - **JUnit 5 + Mockito** — testes unitários e mocks para camada de serviço/controller.
 - **Docker com multi-stage build e Layered JAR** — imagem enxuta e build otimizado.

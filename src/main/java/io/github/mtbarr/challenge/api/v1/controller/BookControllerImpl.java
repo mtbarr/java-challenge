@@ -9,6 +9,7 @@ import io.github.mtbarr.challenge.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +53,9 @@ public class BookControllerImpl implements BookControllerApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookResponse> getBookById(@PathVariable Long id) {
+    public ResponseEntity<BookResponse> getBookById(
+            @PathVariable Long id
+    ) {
         final Book book = bookService.getBookById(id);
         final BookResponse response = bookResponseMapper.toResponse(book);
         return ResponseEntity.ok(response);

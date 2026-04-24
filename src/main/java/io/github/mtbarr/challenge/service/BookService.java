@@ -17,25 +17,31 @@ public class BookService {
     private final @NonNull BookRepository bookRepository;
     private final @NonNull BookMapper bookMapper;
 
-    public BookService(@NonNull BookRepository bookRepository, @NonNull BookMapper bookMapper) {
+    public BookService(
+            @NonNull BookRepository bookRepository,
+            @NonNull BookMapper bookMapper
+    ) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
     }
 
-    public @NonNull Book getBookById(@NonNull Long id) {
+    public Book getBookById(@NonNull Long id) {
         return bookRepository.findById(id)
-            .map(bookMapper::toDomain)
-            .orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + id));
+                .map(bookMapper::toDomain)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Book not found with id: " + id));
     }
 
-    public @NonNull Book createBook(@NonNull Book book) {
-        final BookEntity savedEntity = bookRepository.save(bookMapper.toEntity(book));
+    public Book createBook(Book book) {
+        final BookEntity savedEntity = bookRepository
+                .save(bookMapper.toEntity(book));
         return bookMapper.toDomain(savedEntity);
     }
 
-    public @NonNull Book updateBook(@NonNull Long id, @NonNull Book book) {
+    public Book updateBook(Long id, Book book) {
         final BookEntity entity = bookRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Book not found with id: " + id));
 
         entity.setTitle(book.title());
         entity.setAuthor(book.author());
@@ -46,13 +52,14 @@ public class BookService {
 
     public void deleteBook(@NonNull Long id) {
         if (!bookRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Book not found with id: " + id);
+            throw new ResourceNotFoundException(
+                    "Book not found with id: " + id);
         }
         bookRepository.deleteById(id);
     }
 
     public @NonNull Page<Book> getBooks(int page, int size) {
         return bookRepository.findAll(PageRequest.of(page, size))
-            .map(bookMapper::toDomain);
+                .map(bookMapper::toDomain);
     }
 }

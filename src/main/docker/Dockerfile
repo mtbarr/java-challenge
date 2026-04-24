@@ -24,11 +24,10 @@ COPY --from=build /home/gradle/project/build/extracted/spring-boot-loader/ ./
 COPY --from=build /home/gradle/project/build/extracted/snapshot-dependencies/ ./
 COPY --from=build /home/gradle/project/build/extracted/application/ ./
 
-EXPOSE 1515
+EXPOSE 8080
 
 ENTRYPOINT [
   "java", \
-  "-XX:+UseContainerSupport", \
   "-XX:MaxRAMPercentage=95.0", \
   "-XX:+UseContainerSupport", \
   "-XX:+UseZGC", \

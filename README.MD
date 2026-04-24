@@ -1,199 +1,67 @@
-﻿# API de Livros
+﻿
+# java-challenge
 
-Base URL: `/v1/books`
+![Java 25](https://img.shields.io/badge/Java-25-informational)
+![Spring Boot 3.5](https://img.shields.io/badge/Spring%20Boot-3.5-success)
+![Gradle 9](https://img.shields.io/badge/Gradle-9-7f52ff)
+![Docker](https://img.shields.io/badge/Docker-ready-blue)
+![License MIT](https://img.shields.io/badge/License-MIT-black)
 
----
+## Descrição
 
-## Sumário
+API REST para cadastro e gerenciamento de livros com suporte a paginação, validação e persistência em memória para entrega rápida de um backend sólido.
 
-- [Criar livro](#criar-livro)
-- [Buscar livro por ID](#buscar-livro-por-id)
-- [Listar livros](#listar-livros)
-- [Atualizar livro](#atualizar-livro)
-- [Excluir livro](#excluir-livro)
-- [Códigos de resposta](#códigos-de-resposta)
-- [Erros](#erros)
+## Funcionalidades
 
----
+- Listar livros com paginação (`page`, `size`).
+- Buscar livro por ID.
+- Criar livro com validação de dados.
+- Atualizar livro existente.
+- Excluir livro por ID.
 
-## Criar livro
+## Stack e Decisões Técnicas
 
-`POST /v1/books`
+- Java 25 — uso da versão mais recente para aproveitar recursos da linguagem e performance (Virtual Threads, Menor uso de memoria com CompactObjectHeaders)
 
-Cria um novo livro no sistema.
+- Spring Boot 3.5 — estabilidade e suporte moderno para APIs REST.
+- Gradle 9 — build rápido, configuração declarativa e compatibilidade com cache.
+- Spring Data JPA + H2 — persistência leve para protótipo com SQL acessível e testes rápidos.
+- MapStruct — mapeamento de DTOs com código gerado, evitando boilerplate.
+- Bean Validation (Jakarta) — validação consistente de entrada no nível do modelo.
+- SpringDoc OpenAPI 2.8.x — documentação automática das rotas e contratos.
+- JUnit 5 + Mockito — testes unitários e mocks para camada de serviço/controller.
+- Docker com multi-stage build e Layered JAR — imagem enxuta e build otimizado.
 
-### Request Body
+## Documentação da API
 
-```json
-{
-  "title": "O Senhor dos Anéis",
-  "author": "J.R.R. Tolkien",
-  "publicationYear": 1954
-}
+| Método | Endpoint | Descrição | Status de sucesso |
+|--------|----------|-----------|-------------------|
+| GET | `/v1/books` | Lista paginada | `200` |
+| GET | `/v1/books/{id}` | Busca por ID | `200` |
+| POST | `/v1/books` | Cria livro | `201` |
+| PUT | `/v1/books/{id}` | Atualiza livro | `200` |
+| DELETE | `/v1/books/{id}` | Remove livro | `204` |
+
+## Como Rodar Localmente
+
+### Via Docker
+
+```bash
+docker build -t java-challenge .
+docker run -d -p 8080:8080 -m 1g --name java-challenge java-challenge
 ```
 
-| Campo             | Tipo    | Obrigatório | Validação                          |
-|-------------------|---------|-------------|------------------------------------|
-| `title`           | String  | Sim         | Não pode ser vazio                 |
-| `author`          | String  | Sim         | Não pode ser vazio                 |
-| `publicationYear` | Integer | Sim         | Deve ser positivo, entre 1000–2100 |
+### Via Gradle
 
-### Response `201 Created`
-
-```json
-{
-  "id": 1,
-  "title": "O Senhor dos Anéis",
-  "author": "J.R.R. Tolkien",
-  "publicationYear": 1954
-}
+```bash
+./gradlew bootRun
 ```
 
----
+## Rodando os Testes
 
-## Buscar livro por ID
-
-`GET /v1/books/{id}`
-
-Retorna os dados de um livro específico pelo seu identificador.
-
-### Path Parameters
-
-| Parâmetro | Tipo | Descrição               |
-|-----------|------|-------------------------|
-| `id`      | Long | Identificador do livro  |
-
-### Response `200 OK`
-
-```json
-{
-  "id": 1,
-  "title": "O Senhor dos Anéis",
-  "author": "J.R.R. Tolkien",
-  "publicationYear": 1954
-}
+```bash
+./gradlew test
 ```
-
-### Response `404 Not Found`
-
-```json
-{
-  "status": 404,
-  "message": "Book not found with id: 1"
-}
-```
-
----
-
-## Listar livros
-
-`GET /v1/books`
-
-Retorna uma lista paginada de todos os livros cadastrados.
-
-### Query Parameters
-
-| Parâmetro | Tipo    | Obrigatório | Padrão | Descrição                       |
-|-----------|---------|-------------|--------|---------------------------------|
-| `page`    | Integer | Não         | `0`    | Número da página (base zero)    |
-| `size`    | Integer | Não         | `15`   | Quantidade de itens por página  |
-
-### Exemplo de requisição
-
-```
-GET /v1/books?page=0&size=15
-```
-
-### Response `200 OK`
-
-```json
-{
-  "content": [
-    {
-      "id": 1,
-      "title": "O Senhor dos Anéis",
-      "author": "J.R.R. Tolkien",
-      "publicationYear": 1954
-    },
-    {
-      "id": 2,
-      "title": "Clean Code",
-      "author": "Robert C. Martin",
-      "publicationYear": 2008
-    }
-  ],
-  "page": {
-    "size": 15,
-    "number": 0,
-    "totalElements": 2,
-    "totalPages": 1
-  }
-}
-```
-
----
-
-## Atualizar livro
-
-`PUT /v1/books/{id}`
-
-Atualiza todos os dados de um livro existente. Todos os campos são obrigatórios.
-
-### Path Parameters
-
-| Parâmetro | Tipo | Descrição               |
-|-----------|------|-------------------------|
-| `id`      | Long | Identificador do livro  |
-
-### Request Body
-
-```json
-{
-  "title": "O Senhor dos Anéis: A Sociedade do Anel",
-  "author": "J.R.R. Tolkien",
-  "publicationYear": 1954
-}
-```
-
-| Campo             | Tipo    | Obrigatório | Validação                          |
-|-------------------|---------|-------------|------------------------------------|
-| `title`           | String  | Sim         | Não pode ser vazio                 |
-| `author`          | String  | Sim         | Não pode ser vazio                 |
-| `publicationYear` | Integer | Sim         | Deve ser positivo, entre 1000–2100 |
-
-### Response `200 OK`
-
-```json
-{
-  "id": 1,
-  "title": "O Senhor dos Anéis: A Sociedade do Anel",
-  "author": "J.R.R. Tolkien",
-  "publicationYear": 1954
-}
-```
-
-### Response `404 Not Found`
-
-```json
-{
-  "status": 404,
-  "message": "Book not found with id: 1"
-}
-```
-
----
-
-## Excluir livro
-
-`DELETE /v1/books/{id}`
-
-Exclui permanentemente um livro pelo seu identificador.
-
-### Path Parameters
-
-| Parâmetro | Tipo | Descrição               |
-|-----------|------|-------------------------|
-| `id`      | Long | Identificador do livro  |
 
 ### Response `204 No Content`
 
@@ -237,11 +105,9 @@ Erros de validação (`400 Bad Request`) retornam os campos que falharam:
 
 ```json
 {
+  "timestamp": "2026-04-24T00:11:42.019+00:00",
   "status": 400,
-  "message": "Validation failed",
-  "errors": {
-    "title": "Título é obrigatório",
-    "publicationYear": "Ano de publicação é obrigatório"
-  }
+  "error": "Bad Request",
+  "path": "/v1/books"
 }
 ```

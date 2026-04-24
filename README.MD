@@ -1,5 +1,4 @@
-﻿
-# java-challenge
+﻿# java-challenge
 
 ![Java 25](https://img.shields.io/badge/Java-25-informational)
 ![Spring Boot 3.5](https://img.shields.io/badge/Spring%20Boot-3.5-success)
@@ -21,15 +20,15 @@ API REST para cadastro e gerenciamento de livros com suporte a paginação, vali
 
 ## Stack e Decisões Técnicas
 
-- Java 25 — uso da versão mais recente para aproveitar recursos de performance: [JEP 491](https://openjdk.org/jeps/491) (Virtual Threads sem pinning) e [JEP 450](https://openjdk.org/jeps/450) (Compact Object Headers com menor uso de memória).
-- Spring Boot 3.5 — estabilidade e suporte moderno para APIs REST.
-- Gradle 9 — build rápido, configuração declarativa e compatibilidade com cache.
-- Spring Data JPA + H2 — persistência leve para protótipo com SQL acessível e testes rápidos.
-- MapStruct — mapeamento de DTOs com código gerado, evitando boilerplate.
-- Bean Validation (Jakarta) — validação consistente de entrada no nível do modelo.
-- SpringDoc OpenAPI 2.8.x — documentação automática das rotas e contratos.
-- JUnit 5 + Mockito — testes unitários e mocks para camada de serviço/controller.
-- Docker com multi-stage build e Layered JAR — imagem enxuta e build otimizado.
+- **Java 25** — uso da versão mais recente para aproveitar recursos de performance: [JEP 491](https://openjdk.org/jeps/491) (Virtual Threads sem pinning) e [JEP 450](https://openjdk.org/jeps/450) (Compact Object Headers com menor uso de memória).
+- **Spring Boot 3.5** — estabilidade e suporte moderno para APIs REST.
+- **Gradle 9** — build rápido, configuração declarativa e compatibilidade com cache.
+- **Spring Data JPA + H2** — persistência leve para protótipo com SQL acessível e testes rápidos.
+- **MapStruct** — mapeamento de DTOs com código gerado, evitando boilerplate.
+- **Bean Validation (Jakarta)** — validação consistente de entrada no nível do modelo.
+- **SpringDoc OpenAPI 2.8.x** — documentação automática das rotas e contratos.
+- **JUnit 5 + Mockito** — testes unitários e mocks para camada de serviço/controller.
+- **Docker com multi-stage build e Layered JAR** — imagem enxuta e build otimizado.
 
 ## Documentação da API
 
@@ -41,13 +40,28 @@ API REST para cadastro e gerenciamento de livros com suporte a paginação, vali
 | PUT | `/v1/books/{id}` | Atualiza livro | `200` |
 | DELETE | `/v1/books/{id}` | Remove livro | `204` |
 
-## Como Rodar Localmente
+## Como Rodar
 
-### Via Docker
+### Pré-requisitos
+
+- Docker
+
+### Via Docker Compose
 
 ```bash
-docker build -t java-challenge .
-docker run -d -p 8080:8080 -m 1g --name java-challenge java-challenge
+docker compose up -d
+```
+
+### Logs
+
+```bash
+docker compose logs -f
+```
+
+### Parar
+
+```bash
+docker compose down
 ```
 
 ### Via Gradle
@@ -62,32 +76,15 @@ docker run -d -p 8080:8080 -m 1g --name java-challenge java-challenge
 ./gradlew test
 ```
 
-### Response `204 No Content`
+## Códigos de Resposta
 
-Sem corpo de resposta.
-
-### Response `404 Not Found`
-
-```json
-{
-  "status": 404,
-  "message": "Book not found with id: 1"
-}
-```
-
----
-
-## Códigos de resposta
-
-| Código | Descrição                                          |
-|--------|----------------------------------------------------|
-| `200`  | Requisição processada com sucesso                  |
-| `201`  | Recurso criado com sucesso                         |
-| `204`  | Requisição processada com sucesso, sem conteúdo    |
-| `400`  | Dados da requisição inválidos                      |
-| `404`  | Recurso não encontrado                             |
-
----
+| Código | Descrição |
+|--------|-----------|
+| `200` | Requisição processada com sucesso |
+| `201` | Recurso criado com sucesso |
+| `204` | Requisição processada com sucesso, sem conteúdo |
+| `400` | Dados da requisição inválidos |
+| `404` | Recurso não encontrado |
 
 ## Erros
 

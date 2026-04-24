@@ -30,18 +30,7 @@ API REST para cadastro e gerenciamento de livros com suporte a paginação, vali
 - **Docker com multi-stage build e Layered JAR** — imagem enxuta e build otimizado.
 - **GitHub Actions** — pipeline com etapa de testes obrigatória antes do build e push da imagem Docker.
 
-## Documentação da API
-
-| Método | Endpoint | Descrição | Status de sucesso |
-|--------|----------|-----------|-------------------|
-| GET | `/v1/books` | Lista paginada | `200` |
-| GET | `/v1/books/{id}` | Busca por ID | `200` |
-| POST | `/v1/books` | Cria livro | `201` |
-| PUT | `/v1/books/{id}` | Atualiza livro | `200` |
-| DELETE | `/v1/books/{id}` | Remove livro | `204` |
-
 ## Como Rodar
-
 ### Pré-requisitos
 
 - [Java 25](https://openjdk.org/projects/jdk/25/) — necessário apenas para rodar via Gradle
@@ -66,35 +55,24 @@ docker compose up -d
 ./gradlew bootRun
 ```
 
-### Logs
-
-```bash
-docker compose logs -f
-```
-
-### Parar
-
-```bash
-docker compose down
-```
-
 ## Rodando os Testes
 
 ```bash
 ./gradlew test
 ```
 
-## Códigos de Resposta
+## Documentação da API
 
-| Código | Descrição |
-|--------|-----------|
-| `200` | Requisição processada com sucesso |
-| `201` | Recurso criado com sucesso |
-| `204` | Requisição processada com sucesso, sem conteúdo |
-| `400` | Dados da requisição inválidos |
-| `404` | Recurso não encontrado |
+| Método | Endpoint | Descrição | Status de sucesso |
+|--------|----------|-----------|-------------------|
+| GET | `/v1/books` | Lista paginada | `200` |
+| GET | `/v1/books/{id}` | Busca por ID | `200` |
+| POST | `/v1/books` | Cria livro | `201` |
+| PUT | `/v1/books/{id}` | Atualiza livro | `200` |
+| DELETE | `/v1/books/{id}` | Remove livro | `204` |
 
-## Erros
+
+### Erros
 
 Todas as respostas de erro seguem o formato:
 

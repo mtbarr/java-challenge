@@ -26,13 +26,4 @@ COPY --from=build /home/gradle/project/build/extracted/application/ ./
 
 EXPOSE 8080
 
-ENTRYPOINT [
-  "java", \
-  "-XX:MaxRAMPercentage=95.0", \
-  "-XX:+UseContainerSupport", \
-  "-XX:+UseZGC", \
-  "-XX:+UnlockExperimentalVMOptions", \
-  "-XX:+UseCompactObjectHeaders", \
-  "org.springframework.boot.loader.launch.JarLauncher"
- ]
-
+ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=95.0", "-XX:+UseZGC", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCompactObjectHeaders", "org.springframework.boot.loader.launch.JarLauncher"]

@@ -44,12 +44,26 @@ API REST para cadastro e gerenciamento de livros com suporte a paginação, vali
 
 ### Pré-requisitos
 
-- Docker
+- [Java 25](https://openjdk.org/projects/jdk/25/) — necessário apenas para rodar via Gradle
+- [Docker](https://www.docker.com/) — necessário para rodar via Docker Compose
+
+### Instalação
+
+```bash
+git clone https://github.com/seu-usuario/java-challenge.git
+cd java-challenge
+```
 
 ### Via Docker Compose
 
 ```bash
 docker compose up -d
+```
+
+### Via Gradle
+
+```bash
+./gradlew bootRun
 ```
 
 ### Logs
@@ -62,12 +76,6 @@ docker compose logs -f
 
 ```bash
 docker compose down
-```
-
-### Via Gradle
-
-```bash
-./gradlew bootRun
 ```
 
 ## Rodando os Testes
